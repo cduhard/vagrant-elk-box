@@ -16,7 +16,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :forwarded_port, guest: 9200, host: 9200 #elasticsearch
   config.vm.network :forwarded_port, guest: 9300, host: 9300
   config.vm.network :forwarded_port, guest: 5672, host: 5672 #rabbitmq
-  config.vm.network :forwarded_port, guest: 55672, host: 55672 # rabbitmq management
+  config.vm.network :forwarded_port, guest: 15672, host: 15672 # rabbitmq management
 
   config.vm.provider :virtualbox do |vb|
       vb.customize ["modifyvm", :id, "--cpus", "2", "--memory", "2048"]
