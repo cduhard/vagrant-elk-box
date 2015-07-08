@@ -3,6 +3,11 @@ class { 'apt':
   always_apt_update => true,
 }
 
+#Erlang
+include 'erlang'
+package { 'erlang-base':
+  ensure => 'latest',
+}
 
 # Java is required
 class { 'java': }
@@ -14,12 +19,12 @@ class { 'elasticsearch':
 }
 
 elasticsearch::instance { 'es-01':
-  config => { 
+  config => {
   'cluster.name' => 'vagrant_elasticsearch',
   'index.number_of_replicas' => '0',
   'index.number_of_shards'   => '1',
   'network.host' => '0.0.0.0',
-  'marvel.agent.enabled' => false #DISABLE marvel data collection. 
+  'marvel.agent.enabled' => false #DISABLE marvel data collection.
   },        # Configuration hash
   init_defaults => { }, # Init defaults hash
   before => Exec['start kibana']
@@ -69,4 +74,19 @@ exec { 'download_kibana':
 
 exec {'start kibana':
     command => '/etc/init.d/kibana start',
+}
+
+class { '::rabbitmq':
+  service_manage    => true,
+  port              => '5672',
+  delete_guest_user => false,
+  environment_variables   => {
+    'RABBITMQ_NODENAME'     => 'rabbit',
+    'RABBITMQ_SERVICENAME'  => 'rabbitMQ'
+  }
+}
+
+rabbitmq_user { 'cduhard':
+  admin    => true,
+  password => 'gotsuper',
 }

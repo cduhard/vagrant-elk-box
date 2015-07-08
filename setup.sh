@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# this script installs the puppet modules we need, 
+# this script installs the puppet modules we need,
 #and tries to do tricks with setting local repository for ubuntu updates
 
 # Install wget
@@ -35,6 +35,12 @@ if [ ! -d /etc/puppet/modules/elasticsearch ]; then
 fi
 if [ ! -d /etc/puppet/modules/logstash ]; then
  puppet module install elasticsearch-logstash
+fi
+if [ ! -d /etc/puppet/modules/garethr-erlang ]; then
+  puppet module install garethr-erlang
+fi
+if [ ! -d /etc/puppet/modules/puppetlabs-rabbitmq ]; then
+  puppet module install puppetlabs-rabbitmq
 fi
 if [ ! -f /etc/init.d/kibana ]; then
  sudo cp /vagrant/kibana4_init /etc/init.d/kibana

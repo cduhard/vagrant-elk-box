@@ -13,15 +13,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.box = "puppetlabs/ubuntu-14.04-64-puppet"
   config.vm.network :forwarded_port, guest: 5601, host: 5601
-  config.vm.network :forwarded_port, guest: 9200, host: 9200
+  config.vm.network :forwarded_port, guest: 9200, host: 9200 #elasticsearch
   config.vm.network :forwarded_port, guest: 9300, host: 9300
+  config.vm.network :forwarded_port, guest: 5672, host: 5672 #rabbitmq
+  config.vm.network :forwarded_port, guest: 55672, host: 55672 # rabbitmq management
 
   config.vm.provider :virtualbox do |vb|
       vb.customize ["modifyvm", :id, "--cpus", "2", "--memory", "2048"]
   end
 
   config.vm.provider "vmware_fusion" do |v, override|
-     ## the puppetlabs ubuntu 14-04 image might work on vmware, not tested? 
+     ## the puppetlabs ubuntu 14-04 image might work on vmware, not tested?
     v.provision "shell", path: 'ubuntu.sh'
     v.box = "phusion/ubuntu-14.04-amd64"
     v.vmx["numvcpus"] = "2"
