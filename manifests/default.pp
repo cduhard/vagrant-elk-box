@@ -48,10 +48,10 @@ class { 'logstash':
 }
 
 # remove initial logstash config
-#file { '/etc/logstash/conf.d/logstash':
-  #ensure  => '/vagrant/confs/logstash/logstash.conf',
- # require => [ Class['logstash'] ],
-#}
+file { '/etc/logstash/conf.d/logstash':
+  ensure  => '/vagrant/confs/logstash/logstash.conf',
+  require => [ Class['logstash'] ],
+}
 
 
 # Kibana
